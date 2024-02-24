@@ -24,7 +24,7 @@ namespace Dz6_2
             };
         }
         int i = 0;
-        public (int?, int?,string?) TakePlanet(string name)
+        public (int?, int?,string?) GetPlanet(string name)
         { 
             i++;
             foreach (var planet in planets)

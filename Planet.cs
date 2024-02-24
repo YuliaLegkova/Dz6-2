@@ -15,7 +15,7 @@ namespace Dz6_2
         public string Name { get; } = name;
         public int Number { get; } = number;
         public int EquatorLength { get; } = equatorLength;
-        public Planet PreviousPlanet { get; } = previousPlanet;
+        public Planet? PreviousPlanet { get; } = previousPlanet;
     }
 
 }
