@@ -1,45 +1,48 @@
-﻿using Dz6_2;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.Design;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-
-namespace Dz6_2
+﻿namespace Dz6_2
 {
     class CatalogPlanets
     {
-        private List<Planet> planets;
+        
+       
+        private readonly List<Planet> planets;
+        private static int callCounter = 0;
         public CatalogPlanets()
         {
-            Planet? previousPlanet = null;
-            planets = new List<Planet>
-            {
-                new Planet("Венера", 2, 38052, previousPlanet:previousPlanet),
-                new Planet("Земля", 3, 40075, previousPlanet:previousPlanet),
-                new Planet("Марс", 4, 21165, previousPlanet:previousPlanet)
-            };
+
+            planets = new List<Planet>();
+            var venus = new Planet("Венера", 2, 38052, null);
+            var earth = new Planet("Земля", 3, 40075, venus);
+            var mars = new Planet("Марс", 4, 21165, earth);
+            planets.Add(venus);
+            planets.Add(earth);
+            planets.Add(mars);
+            
+            
         }
-        int i = 0;
-        public (int?, int?,string?) GetPlanet(string name)
-        { 
-            i++;
+         public (int? Number, int? EquatorLength, string? ErrorMessage) GetPlanet(string name)
+        {
+
+            callCounter++;
             foreach (var planet in planets)
             {
-               
                 if (planet.Name == name)
+                {
+                    
+                    if (callCounter % 3 == 0)
+                    {
+                        callCounter = 0;
+                        return (null, null, "Вы спрашиваете слишком часто");
+                    }
                     return (planet.Number, planet.EquatorLength, null);
+                }     
                 
-                if (i % 3 == 0)
-                    return (null, null, "Вы спрашиваете слишком часто");
-               
-            } 
+            }
+            if (callCounter % 3 == 0)
+            {
+                callCounter = 0;
+                return (null, null, "Вы спрашиваете слишком часто");
+            }
             return (null, null, "Не удалось найти планету");
         }
     }
-
-
 }  
